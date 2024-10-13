@@ -12,7 +12,6 @@ body {
   margin: 0;
   display: flex;
   width: 100%;
-  justify-content: center;
 }
 
 h1 {

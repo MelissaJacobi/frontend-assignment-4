@@ -30,7 +30,6 @@ function TaskList() {
 
     return (
         <div className="task-list-container">
-          <h1>Daily Planner</h1>
             <h2>Tasks Remaining: {remainingTasks}</h2>
             <input
                 type="text"

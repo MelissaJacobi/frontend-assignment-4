@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './App.css';
 
 function TaskList() {
     const [tasks, setTasks] = useState([]);
@@ -30,7 +29,6 @@ function TaskList() {
 
     return (
         <div className="task-list-container">
-          <h1>Daily Planner</h1>
             <h2>Tasks Remaining: {remainingTasks}</h2>
             <input
                 type="text"
@@ -42,7 +40,7 @@ function TaskList() {
 
             <div id="taskList">
                 {tasks.map((task, index) => (
-                    <div key={index} className={`task ${task.completed ? 'completed' : ''}`}>
+                    <div key={index} className="task">
                         <input
                             type="checkbox"
                             checked={task.completed}

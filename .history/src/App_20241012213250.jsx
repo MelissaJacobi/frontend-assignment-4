@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import './App.css';
 
 function TaskList() {
     const [tasks, setTasks] = useState([]);
     const [taskInput, setTaskInput] = useState('');
+    const [dueDateInput, setDueDateInput] = useState('');
 
     const addTask = () => {
         if (!taskInput.trim()) {
@@ -12,7 +12,6 @@ function TaskList() {
         }
 
         const newTask = { task: taskInput.trim(), completed: false };
-        setTasks(prevTasks => [...prevTasks, newTask]);
         setTaskInput('');
     };
 
@@ -30,7 +29,6 @@ function TaskList() {
 
     return (
         <div className="task-list-container">
-          <h1>Daily Planner</h1>
             <h2>Tasks Remaining: {remainingTasks}</h2>
             <input
                 type="text"
@@ -48,7 +46,9 @@ function TaskList() {
                             checked={task.completed}
                             onChange={() => toggleCompletion(index)}
                         />
-                        <span className="task-text">{task.task}</span>
+                        <span className="task-text">
+                            {task.task}
+                        </span>
                         <button onClick={() => deleteTask(index)} className="deleteButton">Delete</button>
                     </div>
                 ))}

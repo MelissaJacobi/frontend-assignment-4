@@ -1,19 +1,28 @@
 import React, { useState } from 'react';
-import './App.css';
 
 function TaskList() {
     const [tasks, setTasks] = useState([]);
     const [taskInput, setTaskInput] = useState('');
+    const [dueDateInput, setDueDateInput] = useState('');
 
     const addTask = () => {
         if (!taskInput.trim()) {
             alert("Please enter a task!");
             return;
         }
+        if (!dueDateInput) {
+            alert("Please enter a due date!");
+            return;
+        }
+        if (new Date(dueDateInput) < new Date()) {
+            alert("The due date must be in the future!");
+            return;
+        }
 
-        const newTask = { task: taskInput.trim(), completed: false };
-        setTasks(prevTasks => [...prevTasks, newTask]);
+        const newTask = { task: taskInput.trim(), dueDate: dueDateInput };
+        setTasks(prevTasks => [...prevTasks, newTask].sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate)));
         setTaskInput('');
+        setDueDateInput('');
     };
 
     const deleteTask = (index) => {
@@ -26,29 +35,28 @@ function TaskList() {
         ));
     };
 
-    const remainingTasks = tasks.filter(task => !task.completed).length;
-
     return (
         <div className="task-list-container">
-          <h1>Daily Planner</h1>
-            <h2>Tasks Remaining: {remainingTasks}</h2>
             <input
                 type="text"
                 placeholder="Enter task"
                 value={taskInput}
                 onChange={(e) => setTaskInput(e.target.value)}
             />
+            <input
+                type="date"
+                value={dueDateInput}
+                onChange={(e) => setDueDateInput(e.target.value)}
+            />
             <button onClick={addTask}>Add Task</button>
 
             <div id="taskList">
                 {tasks.map((task, index) => (
                     <div key={index} className={`task ${task.completed ? 'completed' : ''}`}>
-                        <input
-                            type="checkbox"
-                            checked={task.completed}
-                            onChange={() => toggleCompletion(index)}
-                        />
-                        <span className="task-text">{task.task}</span>
+                        <div onClick={() => toggleCompletion(index)}>
+                            {task.task}
+                            <span className="due-date"> Due: {task.dueDate}</span>
+                        </div>
                         <button onClick={() => deleteTask(index)} className="deleteButton">Delete</button>
                     </div>
                 ))}
